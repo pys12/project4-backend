@@ -3,11 +3,21 @@ const { PORT = 3000, MONGODB_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const methodOverride = require('method-override');
+const cors = require ('cors')
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(cors({ origin: true, credentials: true }))
+
+app.use('/albums',require('./routes/albums'))
 
 mongoose.connect(MONGODB_URL, {
-  useUnifiedTopology: true,
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
 });
 
 mongoose.connection
