@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(cors({ origin: true, credentials: true }))
 
-app.use('/albums',require('./routes/albums'))
+app.use('/products',require('./routes/products'))
 
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
@@ -27,7 +27,7 @@ mongoose.connection
 
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("api is working");
 });
 
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));

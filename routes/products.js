@@ -1,21 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const Album = require("../models/album");
-const Seed = require("../models/seed");
+const Product = require("../models/product");
+const Seed = require("../data/seed");
 
 //seed data
 router.get("/seed", async (req, res) => {
   try {
-    res.status(200).json(await Album.create(Seed));
+    res.status(200).json(await Product.create(Seed));
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-//get album by id
+//get product by id
 router.get("/:id", async (req, res) => {
   try {
-    res.status(200).json(await Album.findById(req.params.id));
+    res.status(200).json(await Product.findById(req.params.id));
   } catch (err) {
     res.status(400).json(err);
   }
@@ -25,43 +25,43 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
       let track = req.body.tracklist.split(",");
-    const newAlbum = new Album({
+    const newProduct = new Product({
       title: req.body.title,
       cover: req.body.cover,
       tracklist: track,
       releaseDate: req.body.releaseDate,
       price: req.body.price,
     });
-    res.status(200).json(await newAlbum.save());
+    res.status(200).json(await newProduct.save());
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-//edit album by id
+//edit product by id
 router.put("/:id", async (req, res) => {
   try {
     res.status(200).json(
-        await Album.findByIdAndUpdate(req.params.id, req.body, {new: true}))
+        await Product.findByIdAndUpdate(req.params.id, req.body, {new: true}))
       
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-//get all albums
+//get all products
 router.get("/", async (req, res) => {
   try {
-    res.status(200).json(await Album.find({}));
+    res.status(200).json(await Product.find({}));
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-//delete album by id
+//delete product by id
 router.delete("/:id", async (req, res) => {
   try {
-    res.status(200).json(await Album.findByIdAndRemove(req.params.id));
+    res.status(200).json(await Product.findByIdAndRemove(req.params.id));
   } catch (err) {
     res.status(400).json(err);
   }
