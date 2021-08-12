@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
-const Seed = require("../data/seed");
+const Seed = require("../data/seedProducts");
 
 //seed data
 router.get("/seed", async (req, res) => {

@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+    },
+    artist: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -17,7 +25,13 @@ const productSchema = new Schema({
         type: Date,
     },
     price: {
-        type:Number
+        type: Number,
+        required: true,
+    },
+    stockCount: {
+        type: Number,
+        required: true,
+        default:0
     }
 }, {timestamps:true})
 

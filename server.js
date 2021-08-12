@@ -12,6 +12,7 @@ app.use(methodOverride('_method'));
 app.use(cors({ origin: true, credentials: true }))
 
 app.use('/products',require('./routes/products'))
+app.use('/users',require('./routes/users'))
 
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
