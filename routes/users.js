@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require('bcryptjs')
 const SeedUsers = require("../data/seedUsers")
+const generateToken = require("../utils/generateToken")
+const isAuthenticated = require('../utils/isAuthenticated')
 //seed users
 router.get("/seedusers", async (req, res) => {
     try {
@@ -14,12 +16,6 @@ router.get("/seedusers", async (req, res) => {
   
 //create new user
 router.post("/login", async (req, res) => {
-  // const newUser = {
-  //     email: req.body.email,
-  //     password:req.body.password
-  // }
-  // await res.send (newUser)
-
   const foundUser = await User.findOne({ email: req.body.email });
   if (foundUser) {
     const matchedPassword = await bcrypt.compareSync(req.body.password,foundUser.password);
@@ -29,6 +25,7 @@ router.post("/login", async (req, res) => {
         name: foundUser.name,
         email: foundUser.email,
         isAdmin: foundUser.isAdmin,
+        token:generateToken(foundUser._id)
       });
         return
     } 
@@ -37,7 +34,20 @@ router.post("/login", async (req, res) => {
   
 });
        
-
+router.get('/profile', isAuthenticated ,async (req, res) => {
+  const foundUser = await User.findById(req.user.id);
+    if (foundUser) {
+        res.status(200).json({
+        _id: foundUser._id,
+        name: foundUser.name,
+        email: foundUser.email,
+        isAdmin: foundUser.isAdmin,
+        });
+    } else {
+        res.status(404).json("No user found");
+    }
+    
+})
 //get users
 router.get("/", async (req, res) => {
     try {
