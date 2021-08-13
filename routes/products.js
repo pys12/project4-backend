@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// post
+// create new product
 router.post("/", async (req, res) => {
   try {
       let track = req.body.tracklist.split(",");
