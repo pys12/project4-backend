@@ -14,7 +14,9 @@ app.use(cors({ origin: true, credentials: true }))
 app.use('/products',require('./routes/products'))
 app.use('/users',require('./routes/users'))
 app.use('/orders',require('./routes/orders'))
-
+app.get('/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+)
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

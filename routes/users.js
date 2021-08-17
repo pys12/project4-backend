@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require('bcryptjs')
-const SeedUsers = require("../data/seedUsers")
+//const SeedUsers = require("../../data/seedUsers")
 const generateToken = require("../utils/generateToken")
 const isAuthenticated = require('../utils/isAuthenticated');
 const isAdmin = require("../utils/isAdmin");
 
 //seed users
-router.get("/seedusers", async (req, res) => {
-    try {
-      res.status(200).json(await User.create(SeedUsers));
-    } catch (err) {
-      res.status(400).json(err);
-    }
-});
+// router.get("/seedusers", async (req, res) => {
+//     try {
+//       res.status(200).json(await User.create(SeedUsers));
+//     } catch (err) {
+//       res.status(400).json(err);
+//     }
+// });
 
 //create new user
 router.post('/', async (req, res) => {

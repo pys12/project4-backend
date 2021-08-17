@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
-const Seed = require("../data/seedProducts");
+//const Seed = require("../../data/seedProducts");
 const isAuthenticated = require("../utils/isAuthenticated");
 const isAdmin = require("../utils/isAdmin");
 const User = require("../models/user");
 
 //seed data
-router.get("/seed", async (req, res) => {
-  try {
-    res.status(200).json(await Product.create(Seed));
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+// router.get("/seed", async (req, res) => {
+//   try {
+//     res.status(200).json(await Product.create(Seed));
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 
 //get product by id
 router.get("/:id", async (req, res) => {
