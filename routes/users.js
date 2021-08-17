@@ -4,7 +4,8 @@ const User = require("../models/user");
 const bcrypt = require('bcryptjs')
 const SeedUsers = require("../data/seedUsers")
 const generateToken = require("../utils/generateToken")
-const isAuthenticated = require('../utils/isAuthenticated')
+const isAuthenticated = require('../utils/isAuthenticated');
+const isAdmin = require("../utils/isAdmin");
 
 //seed users
 router.get("/seedusers", async (req, res) => {
@@ -82,9 +83,17 @@ router.put("/:id", async (req, res) => {
     }
 });
   
+//get all users
+router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    res.status(200).json(await User.findById(req.params.id));
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 //get all users
-router.get("/", async (req, res) => {
+router.get("/", isAuthenticated, isAdmin, async (req, res) => {
     try {
       res.status(200).json(await User.find({}));
     } catch (err) {
@@ -93,7 +102,7 @@ router.get("/", async (req, res) => {
 });
   
 //delete user by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAuthenticated, isAdmin,async (req, res) => {
   try {
     res.status(200).json(await User.findByIdAndRemove(req.params.id));
   } catch (err) {

@@ -17,9 +17,19 @@ router.post("/", isAuthenticated, async (req, res) => {
       paymentMethod: req.body.paymentMethod,
     });
     const createdOrder = await order.save();
-    res.status(201).send({ createdOrder });
+    res.status(201).json( createdOrder );
   }
 });
+
+//get order by id
+router.get("/:id", isAuthenticated, async (req, res) => {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            res.status(200).json(order);
+        }else{
+        res.status(400).json(err);
+      }
+})
 
 //find all orders
 router.get("/", async (req, res) => {
