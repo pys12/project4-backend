@@ -30,10 +30,10 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
     const user = await User.findById(req.user.id)
     const newProduct = new Product({
       user:user._id,
-      artist: "sample artist",
-      title: "sample title",
-      cover: "https://www.sugarizeevents.com/wp-content/uploads/2015/03/product-image-coming-soon.png",
-      tracklist:["sample song"],
+      artist: " ",
+      title: " ",
+      cover: " ",
+      tracklist:[" "],
       releaseDate: Date.now(),
       price: 0,
       stockCount: 0,
@@ -47,12 +47,17 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
 //edit product by id
 router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
     const product = await Product.findById(req.params.id)
-    if(product){
+  if (product) {
+    if (typeof req.body.tracklist === 'string') {
       let track = req.body.tracklist.split(",");
+      product.tracklist = track
+      
+    } else {
+      product.tracklist = req.body.tracklist
+    }
       product.artist = req.body.artist
       product.title = req.body.title
       product.cover = req.body.cover
-      product.tracklist = track
       product.releaseDate = req.body.releaseDate
       product.price = req.body.price
       product.stockCount = req.body.stockCount
